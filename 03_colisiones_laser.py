@@ -73,7 +73,6 @@ class Bullet(pygame.sprite.Sprite):
 		if self.rect.bottom < 0:
 			self.kill()
 
-# Cargar fondo.
 background = pygame.image.load("background.png").convert()
 
 
@@ -89,14 +88,10 @@ for i in range(8):
 	all_sprites.add(meteor)
 	meteor_list.add(meteor)
 
-# Game Loop
 running = True
 while running:
-	# Keep loop running at the right speed
 	clock.tick(60)
-	# Process input (events)
 	for event in pygame.event.get():
-		# check for closing window
 		if event.type == pygame.QUIT:
 			running = False
 		
@@ -104,23 +99,18 @@ while running:
 			if event.key == pygame.K_SPACE:
 				player.shoot()
 
-	# Update
 	all_sprites.update()
-	# Colisiones meteoro - laser
 	hits = pygame.sprite.groupcollide(meteor_list, bullets, True, True)
 	for hit in hits:
 		meteor = Meteor()
 		all_sprites.add(meteor)
 		meteor_list.add(meteor)
 		
-	# Colisiones jugador - meteoro
 	hits = pygame.sprite.spritecollide(player, meteor_list, False)
 	if hits:
 		running = False
-	#Draw / Render
 	screen.blit(background, [0, 0])
 	all_sprites.draw(screen)
-	# *after* drawing everything, flip the display.
 	pygame.display.flip()
 
 pygame.quit()

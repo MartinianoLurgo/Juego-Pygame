@@ -1,11 +1,3 @@
-# 
-#
-#REMEMBER TO CHANGE THE RANDOM Y FOR THE METEORS.
-#
-#
-#
-
-
 import pygame, random
 
 WIDTH = 800
@@ -73,7 +65,6 @@ class Meteor(pygame.sprite.Sprite):
 		if self.rect.top > HEIGHT + 10 or self.rect.left < -25 or self.rect.right > WIDTH + 22 :
 			self.rect.x = random.randrange(WIDTH - self.rect.width)
 
-			#Change this variable
 			self.rect.y = random.randrange(-150, -100)
 			self.speedy = random.randrange(1, 8)
 
@@ -99,7 +90,6 @@ meteor_list = ["meteorGrey_big1.png", "meteorGrey_big2.png", "meteorGrey_big3.pn
 for img in meteor_list:
 	meteor_images.append(pygame.image.load(img).convert())
 
-# Cargar fondo.
 background = pygame.image.load("background.png").convert()
 
 
@@ -115,17 +105,12 @@ for i in range(8):
 	all_sprites.add(meteor)
 	meteor_list.add(meteor)
 
-#Marcador / Score
 score = 0
 
-# Game Loop
 running = True
 while running:
-	# Keep loop running at the right speed
 	clock.tick(60)
-	# Process input (events)
 	for event in pygame.event.get():
-		# check for closing window
 		if event.type == pygame.QUIT:
 			running = False
 		
@@ -134,10 +119,8 @@ while running:
 				player.shoot()
 		
 
-	# Update
 	all_sprites.update()
 
-	# Colisiones meteoro - laser
 	hits = pygame.sprite.groupcollide(meteor_list, bullets, True, True)
 	for hit in hits:
 		score += 1
@@ -146,16 +129,13 @@ while running:
 		meteor_list.add(meteor)
 
 		
-	# Colisiones jugador - meteoro
 	hits = pygame.sprite.spritecollide(player, meteor_list, False)
 	if hits:
 		running = False
 
-	#Draw / Render
 	screen.blit(background, [0, 0])
 	all_sprites.draw(screen)
 
-	# Marcador
 	draw_text(screen, str(score), 25, WIDTH // 2, 10)
 
 

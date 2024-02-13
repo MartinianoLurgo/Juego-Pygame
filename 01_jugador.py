@@ -1,14 +1,3 @@
-#
-#	En este script creamos la ventana de nuestro juego
-#						y
-#	creamos nuestro jugador y le damos movimiento
-#
-#			Creador: Mundo Python
-#
-#			youtube: Mundo Python
-#
-#
-
 import pygame, random
 
 WIDTH = 800
@@ -52,25 +41,18 @@ player = Player()
 all_sprites.add(player)
 
 
-# Game Loop
 running = True
 while running:
-	# Keep loop running at the right speed
 	clock.tick(60)
-	# Process input (events)
 	for event in pygame.event.get():
-		# check for closing window
 		if event.type == pygame.QUIT:
 			running = False
 		
 
-	# Update
 	all_sprites.update()
 
-	#Draw / Render
 	screen.fill(BLACK)
 	all_sprites.draw(screen)
-	# *after* drawing everything, flip the display.
 	pygame.display.flip()
 
 pygame.quit()

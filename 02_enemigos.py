@@ -54,7 +54,6 @@ class Meteor(pygame.sprite.Sprite):
 			self.speedy = random.randrange(1, 8)
 
 
-# Cargar fondo.
 background = pygame.image.load("background.png").convert()
 
 
@@ -69,28 +68,22 @@ for i in range(8):
 	all_sprites.add(meteor)
 	meteor_list.add(meteor)
 
-# Game Loop
+
 running = True
 while running:
-	# Keep loop running at the right speed
 	clock.tick(60)
-	# Process input (events)
 	for event in pygame.event.get():
-		# check for closing window
 		if event.type == pygame.QUIT:
 			running = False
 		
 
-	# Update
 	all_sprites.update()
 
 
 
 
-	#Draw / Render
 	screen.blit(background, [0, 0])
 	all_sprites.draw(screen)
-	# *after* drawing everything, flip the display.
 	pygame.display.flip()
 
 pygame.quit()

@@ -1,11 +1,3 @@
-# 
-#
-#REMEMBER TO CHANGE THE RANDOM Y FOR THE METEORS.
-#
-#
-#
-
-
 import pygame, random
 
 WIDTH = 800
@@ -70,8 +62,6 @@ class Player(pygame.sprite.Sprite):
 		all_sprites.add(bullet)
 		bullets.add(bullet)
 
-		#Agregamos sonido
-		#laser_sound.play()
 
 class Meteor(pygame.sprite.Sprite):
 	def __init__(self):
@@ -90,7 +80,6 @@ class Meteor(pygame.sprite.Sprite):
 		if self.rect.top > HEIGHT + 10 or self.rect.left < -25 or self.rect.right > WIDTH + 22 :
 			self.rect.x = random.randrange(WIDTH - self.rect.width)
 
-			#Change this variable
 			self.rect.y = random.randrange(-150, -100)
 			self.speedy = random.randrange(1, 8)
 
@@ -116,10 +105,8 @@ meteor_list = ["meteorGrey_big1.png", "meteorGrey_big2.png", "meteorGrey_big3.pn
 for img in meteor_list:
 	meteor_images.append(pygame.image.load(img).convert())
 
-# Cargar fondo.
 background = pygame.image.load("background.png").convert()
 
-# Cargar sonidos
 laser_sound = pygame.mixer.Sound("laser5.ogg")
 explosion_sound = pygame.mixer.Sound("explosion.wav")
 pygame.mixer.music.load("music.ogg")
@@ -137,18 +124,12 @@ for i in range(8):
 	all_sprites.add(meteor)
 	meteor_list.add(meteor)
 
-#Marcador / Score
 score = 0
-#pygame.mixer.music.play(loops=-1)
 
-# Game Loop
 running = True
 while running:
-	# Keep loop running at the right speed
 	clock.tick(60)
-	# Process input (events)
 	for event in pygame.event.get():
-		# check for closing window
 		if event.type == pygame.QUIT:
 			running = False
 		
@@ -157,24 +138,17 @@ while running:
 				player.shoot()
 		
 
-	# Update
 	all_sprites.update()
 
-	# Colisiones meteoro - laser
 	hits = pygame.sprite.groupcollide(meteor_list, bullets, True, True)
 	for hit in hits:
 		score += 1
-		#explosion_sound.play()
 		meteor = Meteor()
 		all_sprites.add(meteor)
 		meteor_list.add(meteor)
 
-		
-	# Colisiones jugador - meteoro
 
-
-	################## CHANGES HERE ################################
-	hits = pygame.sprite.spritecollide(player, meteor_list, True) # Change here
+	hits = pygame.sprite.spritecollide(player, meteor_list, True)
 	for hit in hits:
 		player.shield -= 25
 		meteor = Meteor()
@@ -183,14 +157,11 @@ while running:
 		if player.shield <= 0:
 			running = False
 
-	#Draw / Render
 	screen.blit(background, [0, 0])
 	all_sprites.draw(screen)
 
-	# Marcador
 	draw_text(screen, str(score), 25, WIDTH // 2, 10)
 
-	# ESCUDO.
 	draw_shield_bar(screen, 5, 5, player.shield)
 
 
